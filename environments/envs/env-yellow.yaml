@@ -1,0 +1,24 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: env-yellow-app
+  namespace: argo-cd
+  labels:
+    clusterName: env-yellow
+spec:
+  project: default
+  sources:
+    - path: environments/env-yellow
+      repoURL: https://github.com/leunamnauj/Engineering-Multi-Tenancy-for-Crossplane-Automating-Environments-with-vClusters-and-GitOps.git
+      targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argo-cd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
